@@ -108,6 +108,25 @@ abstract class RelationAbstract
         // Get relation object and change the 'identityValue' to an array
         // of all the identities in the current collection
         $this->identityValuesFromCollection($collection);
+
+        // Filter out invalid FK values (0, null, '') that can never match a
+        // real auto-increment PK, and deduplicate so N entities pointing to
+        // the same related row produce only one IN-list entry instead of N.
+        $identityValues = array_values(array_unique(array_filter(
+            (array)$this->identityValue(),
+            static fn($v) => $v !== null && $v !== 0 && $v !== '0' && $v !== ''
+        )));
+
+        if (empty($identityValues)) {
+            // Nothing valid to load — mark every entity's relation as not found.
+            foreach ($collection as $entity) {
+                $entity->relation($relationName, false);
+            }
+            return $collection;
+        }
+
+        $this->identityValue($identityValues);
+
         $relationForeignKey = $this->foreignKey();
         $relationEntityKey = $this->entityKey();
         $collectionRelations = $this->query();
