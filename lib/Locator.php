@@ -1,4 +1,5 @@
 <?php
+
 namespace Spot;
 
 /**
@@ -11,7 +12,7 @@ class Locator
 
     /**
      * Constructor Method
-     * 
+     *
      * @param \Spot\Config $config
      */
     public function __construct(Config $config)
@@ -39,8 +40,10 @@ class Locator
     /**
      * Get mapper for specified entity
      *
-     * @param  string      $entityName Name of Entity object to load mapper for
-     * @return \Spot\Mapper
+     * @param string $entityName Name of Entity object to load mapper for
+     * @template T of object
+     * @param class-string<T> $entityName
+     * @return \Spot\Mapper<T>
      */
     public function mapper($entityName)
     {
