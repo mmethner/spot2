@@ -40,7 +40,6 @@ class Locator
     /**
      * Get mapper for specified entity
      *
-     * @param string $entityName Name of Entity object to load mapper for
      * @template T of object
      * @param class-string<T> $entityName
      * @return \Spot\Mapper<T>
