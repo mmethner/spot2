@@ -8,6 +8,9 @@ use Spot\Entity;
  *
  * @package Spot\Entity
  * @author Vance Lucas <vance@vancelucas.com>
+ * @template T
+ * @implements \Iterator<int, T>
+ * @implements \ArrayAccess<int, T>
  */
 class Collection implements \Iterator, \Countable, \ArrayAccess, \JsonSerializable
 {
@@ -241,6 +244,7 @@ class Collection implements \Iterator, \Countable, \ArrayAccess, \JsonSerializab
      * SPL - Iterator
      *
      * @inheritdoc
+     * @return T
      */
     public function current(): mixed
     {
@@ -301,6 +305,7 @@ class Collection implements \Iterator, \Countable, \ArrayAccess, \JsonSerializab
      * SPL - ArrayAccess
      *
      * @inheritdoc
+     * @return T
      */
     public function offsetGet(mixed $offset): mixed
     {
